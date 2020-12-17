@@ -33,6 +33,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->radio_dec->toggle();
     ui->lineEdit->setValidator(new QRegExpValidator(QRegExp("[0-9]*")));
+    ui->lineEdit->setText("0");
     ui->button_a->setEnabled(false);
     ui->button_b->setEnabled(false);
     ui->button_c->setEnabled(false);
@@ -58,7 +59,10 @@ MainWindow::~MainWindow()
 void MainWindow::digit_number()
 {
     QPushButton* button = (QPushButton *)sender();
-    ui->lineEdit->setText(ui->lineEdit->text() + button->text());
+    QString str = ui->lineEdit->text() + button->text();
+    int a = str.toInt();
+
+    ui->lineEdit->setText(QString::number(a));
 
 }
 
@@ -252,8 +256,12 @@ void MainWindow::on_button_equal_clicked()
 void MainWindow::on_button_ac_clicked()
 {
     ui->lineEdit->setText("");
-    num_first = 0;
-    num_second = 0;
+    num_first = num_second = 0;
+    ui->lineEdit->setText("0");
+    ui->button_plus->setChecked(false);
+    ui->button_minus->setChecked(false);
+    ui->button_divide->setChecked(false);
+    ui->button_multiplie->setChecked(false);
 }
 
 void MainWindow::change_labels(QString text)
