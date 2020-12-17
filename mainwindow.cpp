@@ -20,6 +20,12 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->button_8, SIGNAL(clicked()), this, SLOT(digit_number()));
     connect(ui->button_9, SIGNAL(clicked()), this, SLOT(digit_number()));
     connect(ui->button_0, SIGNAL(clicked()), this, SLOT(digit_number()));
+    connect(ui->button_a, SIGNAL(clicked()), this, SLOT(digit_number()));
+    connect(ui->button_b, SIGNAL(clicked()), this, SLOT(digit_number()));
+    connect(ui->button_c, SIGNAL(clicked()), this, SLOT(digit_number()));
+    connect(ui->button_d, SIGNAL(clicked()), this, SLOT(digit_number()));
+    connect(ui->button_e, SIGNAL(clicked()), this, SLOT(digit_number()));
+    connect(ui->button_f, SIGNAL(clicked()), this, SLOT(digit_number()));
 
     connect(ui->button_plus, SIGNAL(clicked()), this, SLOT(math_operations()));
     connect(ui->button_minus, SIGNAL(clicked()), this, SLOT(math_operations()));
@@ -30,17 +36,19 @@ MainWindow::MainWindow(QWidget *parent)
     ui->button_minus->setCheckable(true);
     ui->button_divide->setCheckable(true);
     ui->button_multiplie->setCheckable(true);
+    ui->radio_bin->setCheckable(true);
+    ui->radio_oct->setCheckable(true);
+    ui->radio_dec->setCheckable(true);
+    ui->radio_hex->setCheckable(true);
 
     ui->radio_dec->toggle();
     ui->lineEdit->setValidator(new QRegExpValidator(QRegExp("[0-9]*")));
-    ui->lineEdit->setText("0");
     ui->button_a->setEnabled(false);
     ui->button_b->setEnabled(false);
     ui->button_c->setEnabled(false);
     ui->button_d->setEnabled(false);
     ui->button_e->setEnabled(false);
     ui->button_f->setEnabled(false);
-
 
     connect(ui->radio_bin, SIGNAL(toggled(bool)), this, SLOT(convert_to_bin()));
     connect(ui->radio_oct, SIGNAL(toggled(bool)), this, SLOT(convert_to_oct()));
@@ -49,6 +57,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(ui->lineEdit, SIGNAL(textChanged(QString)), this,SLOT(change_labels(QString)));
     connect(ui->lineEdit, SIGNAL(textEdited(QString)), this,SLOT(change_labels(QString)));
+
 }
 
 MainWindow::~MainWindow()
@@ -59,10 +68,7 @@ MainWindow::~MainWindow()
 void MainWindow::digit_number()
 {
     QPushButton* button = (QPushButton *)sender();
-    QString str = ui->lineEdit->text() + button->text();
-    int a = str.toInt();
-
-    ui->lineEdit->setText(QString::number(a));
+    ui->lineEdit->setText(ui->lineEdit->text()+button->text());
 
 }
 
@@ -124,74 +130,94 @@ char* MainWindow::ConvertCC(char* x,int fromCC,int toCC)
 
 void MainWindow::convert_to_bin()
 {
-    ui->lineEdit->setValidator(new QRegExpValidator(QRegExp("[0-1]*")));
-    ui->lineEdit->setText(ConvertCC(ui->lineEdit->text().toLocal8Bit().data(),notation,2));
-    notation = 2;
-    ui->button_2->setEnabled(false);
-    ui->button_3->setEnabled(false);
-    ui->button_4->setEnabled(false);
-    ui->button_5->setEnabled(false);
-    ui->button_6->setEnabled(false);
-    ui->button_7->setEnabled(false);
-    ui->button_8->setEnabled(false);
-    ui->button_9->setEnabled(false);
-    ui->button_a->setEnabled(false);
-    ui->button_b->setEnabled(false);
-    ui->button_c->setEnabled(false);
-    ui->button_d->setEnabled(false);
-    ui->button_e->setEnabled(false);
-    ui->button_f->setEnabled(false);
+    if (ui->radio_bin->isChecked())
+    {
+        ui->lineEdit->setValidator(new QRegExpValidator(QRegExp("[0-1]*")));
+        ui->lineEdit->setText(ConvertCC(ui->lineEdit->text().toLocal8Bit().data(),notation,2));
+        ui->button_2->setEnabled(false);
+        ui->button_3->setEnabled(false);
+        ui->button_4->setEnabled(false);
+        ui->button_5->setEnabled(false);
+        ui->button_6->setEnabled(false);
+        ui->button_7->setEnabled(false);
+        ui->button_8->setEnabled(false);
+        ui->button_9->setEnabled(false);
+        ui->button_a->setEnabled(false);
+        ui->button_b->setEnabled(false);
+        ui->button_c->setEnabled(false);
+        ui->button_d->setEnabled(false);
+        ui->button_e->setEnabled(false);
+        ui->button_f->setEnabled(false);
+    }
 }
 
 void MainWindow::convert_to_oct()
 {
-    ui->lineEdit->setValidator(new QRegExpValidator(QRegExp("[0-7]*")));
-    ui->lineEdit->setText(ConvertCC(ui->lineEdit->text().toLocal8Bit().data(),notation,8));
-    notation = 8;
-    ui->button_8->setEnabled(false);
-    ui->button_9->setEnabled(false);
-    ui->button_2->setEnabled(true);
-    ui->button_3->setEnabled(true);
-    ui->button_4->setEnabled(true);
-    ui->button_5->setEnabled(true);
-    ui->button_6->setEnabled(true);
-    ui->button_7->setEnabled(true);
+    if (ui->radio_oct->isChecked())
+    {
+        ui->lineEdit->setValidator(new QRegExpValidator(QRegExp("[0-7]*")));
+        ui->lineEdit->setText(ConvertCC(ui->lineEdit->text().toLocal8Bit().data(),notation,8));
+        ui->button_a->setEnabled(false);
+        ui->button_b->setEnabled(false);
+        ui->button_c->setEnabled(false);
+        ui->button_d->setEnabled(false);
+        ui->button_e->setEnabled(false);
+        ui->button_f->setEnabled(false);
+        ui->button_8->setEnabled(false);
+        ui->button_9->setEnabled(false);
+        ui->button_2->setEnabled(true);
+        ui->button_3->setEnabled(true);
+        ui->button_4->setEnabled(true);
+        ui->button_5->setEnabled(true);
+        ui->button_6->setEnabled(true);
+        ui->button_7->setEnabled(true);
+    }
 }
 
 void MainWindow::convert_to_dec()
 {
-    ui->lineEdit->setValidator(new QRegExpValidator(QRegExp("[0-9]*")));
-    ui->lineEdit->setText(ConvertCC(ui->lineEdit->text().toLocal8Bit().data(),notation,10));
-    notation = 10;
-    ui->button_2->setEnabled(true);
-    ui->button_3->setEnabled(true);
-    ui->button_4->setEnabled(true);
-    ui->button_5->setEnabled(true);
-    ui->button_6->setEnabled(true);
-    ui->button_7->setEnabled(true);
-    ui->button_8->setEnabled(true);
-    ui->button_9->setEnabled(true);
+    if (ui->radio_dec->isChecked())
+    {
+        ui->lineEdit->setValidator(new QRegExpValidator(QRegExp("[0-9]*")));
+        ui->lineEdit->setText(ConvertCC(ui->lineEdit->text().toLocal8Bit().data(),notation,10));
+        ui->button_2->setEnabled(true);
+        ui->button_3->setEnabled(true);
+        ui->button_4->setEnabled(true);
+        ui->button_5->setEnabled(true);
+        ui->button_6->setEnabled(true);
+        ui->button_7->setEnabled(true);
+        ui->button_8->setEnabled(true);
+        ui->button_9->setEnabled(true);
+        ui->button_a->setEnabled(false);
+        ui->button_b->setEnabled(false);
+        ui->button_c->setEnabled(false);
+        ui->button_d->setEnabled(false);
+        ui->button_e->setEnabled(false);
+        ui->button_f->setEnabled(false);
+    }
 }
 
 void MainWindow::convert_to_hex()
 {
-    ui->lineEdit->setValidator(new QRegExpValidator(QRegExp("[0-9, A-F]*")));
-    ui->lineEdit->setText(ConvertCC(ui->lineEdit->text().toLocal8Bit().data(),notation,16));
-    notation = 16;
-    ui->button_2->setEnabled(true);
-    ui->button_3->setEnabled(true);
-    ui->button_4->setEnabled(true);
-    ui->button_5->setEnabled(true);
-    ui->button_6->setEnabled(true);
-    ui->button_7->setEnabled(true);
-    ui->button_8->setEnabled(true);
-    ui->button_9->setEnabled(true);
-    ui->button_a->setEnabled(true);
-    ui->button_b->setEnabled(true);
-    ui->button_c->setEnabled(true);
-    ui->button_d->setEnabled(true);
-    ui->button_e->setEnabled(true);
-    ui->button_f->setEnabled(true);
+    if (ui->radio_hex->isChecked())
+    {
+        ui->lineEdit->setValidator(new QRegExpValidator(QRegExp("[0-9, A-F]*")));
+        ui->lineEdit->setText(ConvertCC(ui->lineEdit->text().toLocal8Bit().data(),notation,16));
+        ui->button_2->setEnabled(true);
+        ui->button_3->setEnabled(true);
+        ui->button_4->setEnabled(true);
+        ui->button_5->setEnabled(true);
+        ui->button_6->setEnabled(true);
+        ui->button_7->setEnabled(true);
+        ui->button_8->setEnabled(true);
+        ui->button_9->setEnabled(true);
+        ui->button_a->setEnabled(true);
+        ui->button_b->setEnabled(true);
+        ui->button_c->setEnabled(true);
+        ui->button_d->setEnabled(true);
+        ui->button_e->setEnabled(true);
+        ui->button_f->setEnabled(true);
+    }
 }
 
 void MainWindow::on_button_equal_clicked()
@@ -257,7 +283,6 @@ void MainWindow::on_button_ac_clicked()
 {
     ui->lineEdit->setText("");
     num_first = num_second = 0;
-    ui->lineEdit->setText("0");
     ui->button_plus->setChecked(false);
     ui->button_minus->setChecked(false);
     ui->button_divide->setChecked(false);
@@ -266,6 +291,19 @@ void MainWindow::on_button_ac_clicked()
 
 void MainWindow::change_labels(QString text)
 {
+    if (ui->radio_bin->isChecked())
+    {
+        notation = 2;
+    } else if (ui->radio_dec->isChecked())
+    {
+        notation = 10;
+    } else if (ui->radio_oct->isChecked())
+    {
+        notation = 8;
+    } else if (ui->radio_hex->isChecked())
+    {
+        notation = 16;
+    }
     QString tmp = ConvertCC(text.toLocal8Bit().data(),notation,2);
     ui->label_bin->setText(tmp);
 
