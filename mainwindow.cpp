@@ -102,10 +102,10 @@ char* MainWindow::ConvertCC(char* x,int fromCC,int toCC)
     char buf[255]={0};
     char *result;
 
-    int i //Это количество символов в начальном числе
-       ,k //Это будет порядковым номером очередного символа в входном числе
-       ,ten=0 //Это будет его аналог в 10-чной системе
-       ,stp=1; //А это просто степень для перевода в 10-чную
+    int i
+       ,k
+       ,ten=0
+       ,stp=1;
 
     for(i=0;x[i];i++);
     for(;i;i--)
@@ -148,6 +148,7 @@ void MainWindow::convert_to_bin()
         ui->button_d->setEnabled(false);
         ui->button_e->setEnabled(false);
         ui->button_f->setEnabled(false);
+        qDebug() << "Select BIN mode";
     }
 }
 
@@ -171,6 +172,7 @@ void MainWindow::convert_to_oct()
         ui->button_5->setEnabled(true);
         ui->button_6->setEnabled(true);
         ui->button_7->setEnabled(true);
+        qDebug() << "Select OCT mode";
     }
 }
 
@@ -194,6 +196,7 @@ void MainWindow::convert_to_dec()
         ui->button_d->setEnabled(false);
         ui->button_e->setEnabled(false);
         ui->button_f->setEnabled(false);
+        qDebug() << "Select DEC mode";
     }
 }
 
@@ -217,6 +220,7 @@ void MainWindow::convert_to_hex()
         ui->button_d->setEnabled(true);
         ui->button_e->setEnabled(true);
         ui->button_f->setEnabled(true);
+        qDebug() << "Select HEX mode";
     }
 }
 
